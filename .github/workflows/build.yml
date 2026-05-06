@@ -70,17 +70,16 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           path: artifacts
+          pattern: crop-master-*
 
       - name: List downloaded files
-        run: ls -la artifacts/
+        run: |
+          find artifacts -type f
 
       - name: Create Release
-        uses: softprops/action-gh-release@v1
+        uses: softprops/action-gh-release@v2
         with:
-          files: |
-            artifacts/crop-master-windows/*
-            artifacts/crop-master-macos/*
-            artifacts/crop-master-linux/*
+          files: artifacts/**/*
           generate_release_notes: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
